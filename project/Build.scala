@@ -8,7 +8,8 @@ object BuildSettings {
     version := "0.1-SNAPSHOT",
     publishTo := Some(Resolver.file("file", new File("releases"))),
     resolvers ++= Seq(
-      Resolver.sonatypeRepo("snapshots")
+      Resolver.sonatypeRepo("snapshots"),
+      Resolver.mavenLocal
     ),
     scalaVersion := "2.11.2",
     //crossScalaVersions := List("2.10.4", scalaVersion.value),
@@ -26,10 +27,10 @@ object BuildSettings {
       "-Yno-adapted-args",
       "-Ywarn-dead-code",
       "-Ywarn-numeric-widen",
-      "-Ywarn-value-discard",
-      "-P:wartremover:only-warn-traverser:org.brianmckenna.wartremover.warts.Unsafe"
-    ),
-    wartremoverErrors ++= Warts.all
+      "-Ywarn-value-discard"
+      //"-P:wartremover:only-warn-traverser:org.brianmckenna.wartremover.warts.Unsafe"
+    )
+    //wartremoverErrors ++= Warts.all
   )
 }
 
@@ -42,6 +43,7 @@ object Dependencies {
   val monocle           = "com.github.julien-truffaut" %% "monocle-core" % monocleVersion
   val monocleGeneric    = "com.github.julien-truffaut" %% "monocle-generic" % monocleVersion
   val monocleMacro      = "com.github.julien-truffaut" %% "monocle-macro" % monocleVersion
+  val kadai             = "io.atlassian" %% "kadai-config" % "2.0.8-SNAPSHOT"
 }
 
 object AndroidPusherBuild extends Build {
@@ -61,6 +63,7 @@ object AndroidPusherBuild extends Build {
     file("core"),
     settings = buildSettings ++ Seq(
       libraryDependencies ++= Seq(
+        kadai,
         monocle,
         monocleGeneric,
         monocleMacro,
