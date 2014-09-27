@@ -54,7 +54,7 @@ object AndroidPusherBuild extends Build {
     settings = buildSettings ++ Seq(
       publishArtifact := false,
       run <<= run in Compile in core)
-  ) aggregate(core, test)
+  ) aggregate(core)
 
   lazy val core: Project = Project(
     "core",
